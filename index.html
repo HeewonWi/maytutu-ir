@@ -48,6 +48,7 @@ html,body{overflow:hidden}
 .cap{flex:0 0 auto;height:66px;margin-top:8px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:22px;line-height:1.4;font-weight:500;color:var(--text);word-break:keep-all;padding:0 24px;overflow:hidden}
 .cap b{font-weight:800;color:#14306b;background:linear-gradient(transparent 52%,#ffe27a 52%);padding:0 3px;border-radius:2px}
 .cap:empty{visibility:hidden}
+@media (max-width:900px){.cap{font-size:18px;height:auto;min-height:56px;padding:0 8px}.play{font-size:15px;padding:10px 16px;margin-left:4px}.ver{display:none}}
 .thumbs{padding:8px 2px 2px!important;flex:0 0 auto}
 @media (min-width:901px){.deck{height:100vh;min-height:0;overflow:hidden}.stage{overflow:hidden}.stage img{position:absolute;left:16px;top:16px;width:calc(100% - 32px);height:calc(100% - 32px);object-fit:contain;max-width:none;max-height:none;box-shadow:none}}.thumbs img{width:78px!important}
 </style></head><body>
@@ -116,7 +117,7 @@ const player=new Audio(NARR);player.preload='auto';let playing=false,tick=null;
 function setBtn(){$('play').textContent=playing?'❚❚ 일시정지':'▶ 대표 음성으로 같이 재생';$('play').classList.toggle('on',playing)}
 function slideAt(t){let r=TL[0];for(const x of TL){if(t>=x.s)r=x;else break}return r}
 function sync(){if(!playing)return;const t=player.currentTime,sl=slideAt(t);if(sl.n!==cur)_go(sl.n);
- let c='';for(const x of sl.sents){if(t>=x[1]-0.12)c=x[0]}$('cap').innerHTML=c}
+ let c='';for(const x of sl.sents){if(t>=x[1]-0.12)c=x[0]}$('cap').innerHTML=c?'<span>'+c+'</span>':''}
 function startPlay(){playing=true;setBtn();player.play().catch(()=>{});clearInterval(tick);tick=setInterval(sync,80)}
 function stopPlay(){playing=false;player.pause();setBtn();clearInterval(tick);$('cap').innerHTML=''}
 player.onended=()=>{stopPlay();player.currentTime=0};
